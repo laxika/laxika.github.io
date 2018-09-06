@@ -6,6 +6,8 @@
 
     <title>Laxi Bloggs</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png"/>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.min.js"></script>
 
@@ -31,15 +33,29 @@
                         controller: 'PostController'
                     });
             }])
-            .controller('HomeController', ['$scope', function ($scope) {
-                console.log("On home!")
+            .controller('HomeController', ['$scope', '$http', function ($scope, $http) {
+                $scope.latestPost = 1;
+
+                $scope.entries = [];
+                for (var i = 0; i <= $scope.latestPost; i++) {
+                    $http.get('/entries/' + i + '.md')
+                        .then(function (response) {
+                            $scope.entries.push(response.data);
+                        })
+                }
             }])
             .controller('PostController', ['$scope', function ($scope) {
                 console.log("On post!")
             }]);
     </script>
 </head>
-<body ng-app="blog">
-<div ui-view></div>
+<body ng-app="blog" style="background: url(https://i.pinimg.com/564x/d3/3a/7a/d33a7ad62735aa246c0480b927a52ce1.jpg)">
+<div class="container" style="background: white;">
+    <div class="header">
+        <img class="img-fluid rounded mt-2" src="https://placeimg.com/1110/220/any">
+    </div>
+
+    <div ui-view></div>
+</div>
 </body>
 </html>
