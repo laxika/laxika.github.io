@@ -1,1 +1,45 @@
-asd
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Laxi Bloggs</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
+
+    <script>
+        angular.module('blog', ['ui.router'])
+            .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+
+                $urlRouterProvider.otherwise('/');
+
+                $stateProvider
+                    .state({
+                        name: 'home',
+                        url: '/',
+                        templateUrl: './page/home/home.html',
+                        controller: 'HomeController'
+                    })
+                    .state({
+                        name: 'post',
+                        url: '/post',
+                        templateUrl: './page/post/post.html',
+                        controller: 'PostController'
+                    });
+            }])
+            .controller('HomeController', ['$scope', function ($scope) {
+                console.log("On home!")
+            }])
+            .controller('PostController', ['$scope', function ($scope) {
+                console.log("On post!")
+            }]);
+    </script>
+</head>
+<body ng-app="blog">
+<div ui-view></div>
+</body>
+</html>
